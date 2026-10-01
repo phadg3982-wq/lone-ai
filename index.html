@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Credix AI | Intelligent BFSI Loan Eligibility & Financial Advisory Suite</title>
+  <meta name="description" content="AI-powered BFSI financial platform featuring intelligent loan eligibility checker, credit score analyzer, reducing-balance EMI calculator, and Groq/Claude AI advisor.">
+  <meta name="keywords" content="Loan eligibility checker, EMI calculator, credit score analyzer, AI finance, fintech, BFSI, Claude API, Groq API">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Chart.js for Financial Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <!-- Glowing Background Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Header & Navigation -->
+  <header class="navbar-glass">
+    <div class="nav-container">
+      <div class="brand-logo" id="brandLogo">
+        <div class="logo-icon-wrapper">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span class="pulse-ring"></span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">CREDIX<span class="gradient-text">.AI</span></span>
+          <span class="brand-subtitle">BFSI INTELLIGENCE SYSTEM</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" id="mainNav">
+        <button class="nav-btn active" data-target="dashboard-section" id="navDashboard">
+          <i class="fa-solid fa-chart-pie"></i> Overview
+        </button>
+        <button class="nav-btn" data-target="eligibility-section" id="navEligibility">
+          <i class="fa-solid fa-file-invoice-dollar"></i> Loan Checker
+        </button>
+        <button class="nav-btn" data-target="credit-section" id="navCredit">
+          <i class="fa-solid fa-gauge-high"></i> Credit Analyzer
+        </button>
+        <button class="nav-btn" data-target="emi-section" id="navEmi">
+          <i class="fa-solid fa-calculator"></i> EMI Calculator
+        </button>
+        <button class="nav-btn" data-target="ai-section" id="navAi">
+          <i class="fa-solid fa-brain"></i> AI Financial Advisor
+        </button>
+        <button class="nav-btn" data-target="records-section" id="navRecords">
+          <i class="fa-solid fa-database"></i> Records & Sync
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn-glass-icon" id="openSettingsBtn" title="API & Google Sheets Settings">
+          <i class="fa-solid fa-sliders"></i>
+          <span class="status-dot-indicator connected" id="apiStatusDot"></span>
+        </button>
+        <a href="#eligibility-section" class="btn-primary-gradient nav-cta" id="quickCheckCta">
+          <span>Apply Check</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-layout">
+
+    <!-- QUICK STATS TICKER -->
+    <section class="quick-stats-bar glass-card">
+      <div class="stat-ticker-item">
+        <span class="ticker-label"><i class="fa-solid fa-shield-check text-cyan"></i> Min Salary Rule:</span>
+        <span class="ticker-value">₹30,000 / mo</span>
+      </div>
+      <div class="stat-ticker-divider"></div>
+      <div class="stat-ticker-item">
+        <span class="ticker-label"><i class="fa-solid fa-star-half-stroke text-amber"></i> Min Credit Score:</span>
+        <span class="ticker-value">700+</span>
+      </div>
+      <div class="stat-ticker-divider"></div>
+      <div class="stat-ticker-item">
+        <span class="ticker-label"><i class="fa-solid fa-hand-holding-dollar text-emerald"></i> Loan Multiplier:</span>
+        <span class="ticker-value">20× Monthly Salary</span>
+      </div>
+      <div class="stat-ticker-divider"></div>
+      <div class="stat-ticker-item">
+        <span class="ticker-label"><i class="fa-solid fa-receipt text-rose"></i> Max Existing EMI:</span>
+        <span class="ticker-value">&lt; ₹20,000 / mo</span>
+      </div>
+      <div class="stat-ticker-divider"></div>
+      <div class="stat-ticker-item">
+        <span class="ticker-label"><i class="fa-solid fa-bolt text-indigo"></i> AI Engine:</span>
+        <span class="ticker-value badge-engine" id="activeEngineBadge">Groq / Claude Active</span>
+      </div>
+    </section>
+
+    <!-- TAB 1: OVERVIEW DASHBOARD -->
+    <section id="dashboard-section" class="tab-content active-tab">
+      <div class="hero-banner glass-card">
+        <div class="hero-content">
+          <div class="badge-pill">
+            <span class="badge-dot"></span> Next-Gen BFSI Financial Intelligence
+          </div>
+          <h1 class="hero-heading">Instant AI-Driven <span class="gradient-text">Loan Eligibility</span> & Risk Evaluation</h1>
+          <p class="hero-description">
+            Empower your financial decisions with automated rule-based underwriting algorithms, reducing-balance EMI simulation, credit risk grading, and contextual AI reasoning powered by Groq & Claude.
+          </p>
+          <div class="hero-buttons">
+            <button class="btn-primary-gradient" onclick="switchTab('eligibility-section')">
+              <i class="fa-solid fa-clipboard-check"></i> Evaluate Loan Eligibility
+            </button>
+            <button class="btn-outline-glass" onclick="switchTab('emi-section')">
+              <i class="fa-solid fa-chart-line"></i> Calculate EMI & Schedule
+            </button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="glass-metric-card float-anim-1">
+            <div class="metric-icon-bubble emerald"><i class="fa-solid fa-circle-check"></i></div>
+            <div class="metric-info">
+              <span class="metric-label">Rule Engine</span>
+              <span class="metric-val">100% Deterministic</span>
+            </div>
+          </div>
+          <div class="glass-metric-card float-anim-2">
+            <div class="metric-icon-bubble indigo"><i class="fa-solid fa-microchip"></i></div>
+            <div class="metric-info">
+              <span class="metric-label">AI Underwriting</span>
+              <span class="metric-val">Claude & Groq LLMs</span>
+            </div>
+          </div>
+          <div class="glass-metric-card float-anim-3">
+            <div class="metric-icon-bubble cyan"><i class="fa-solid fa-table-cells"></i></div>
+            <div class="metric-info">
+              <span class="metric-label">Serverless DB</span>
+              <span class="metric-val">Google Sheets Sync</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="features-grid">
+        <div class="feature-card glass-card hover-glow" onclick="switchTab('eligibility-section')">
+          <div class="feature-icon indigo"><i class="fa-solid fa-file-signature"></i></div>
+          <h3>Loan Eligibility Engine</h3>
+          <p>Instant rule validation against salary thresholds, credit ratings, age constraints, and debt caps with instant loan multiplier calculation.</p>
+          <div class="feature-link">Open Checker <i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+
+        <div class="feature-card glass-card hover-glow" onclick="switchTab('credit-section')">
+          <div class="feature-icon cyan"><i class="fa-solid fa-gauge-simple-high"></i></div>
+          <h3>Credit Score Analyzer</h3>
+          <p>Multi-tier financial risk classification (Excellent, Good, Poor) with personalized credit repair actionable steps & DTI profiling.</p>
+          <div class="feature-link">Analyze Score <i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+
+        <div class="feature-card glass-card hover-glow" onclick="switchTab('emi-section')">
+          <div class="feature-icon emerald"><i class="fa-solid fa-percent"></i></div>
+          <h3>Reducing-Balance EMI</h3>
+          <p>Mathematical reducing-balance amortization calculator with dynamic principal-interest breakdown charts and tenure optimizers.</p>
+          <div class="feature-link">Calculate EMI <i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+
+        <div class="feature-card glass-card hover-glow" onclick="switchTab('ai-section')">
+          <div class="feature-icon rose"><i class="fa-solid fa-robot"></i></div>
+          <h3>AI Financial Advisor</h3>
+          <p>Intelligent contextual recommendations, rejection analysis, customized repayment strategies, and generative financial tips.</p>
+          <div class="feature-link">Consult AI <i class="fa-solid fa-arrow-right"></i></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: LOAN ELIGIBILITY CHECKER -->
+    <section id="eligibility-section" class="tab-content">
+      <div class="section-header">
+        <div class="badge-pill"><i class="fa-solid fa-shield-halved"></i> Milestone 3.1 & 4.1</div>
+        <h2>Loan Eligibility <span class="gradient-text">Evaluation Engine</span></h2>
+        <p>Submit your financial profile for instant rule-based validation and dynamic borrowing capacity calculation.</p>
+      </div>
+
+      <div class="two-column-grid">
+        <!-- Form Column -->
+        <div class="glass-card form-container">
+          <div class="card-top-header">
+            <h3><i class="fa-solid fa-user-check text-cyan"></i> Applicant Details</h3>
+            <button type="button" class="btn-text-action" id="fillDemoEligibility">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Load Sample Data
+            </button>
+          </div>
+
+          <form id="loanEligibilityForm" novalidate>
+            <div class="form-group">
+              <label for="applicantName"><i class="fa-solid fa-id-card"></i> Full Applicant Name</label>
+              <input type="text" id="applicantName" class="form-control" placeholder="e.g. Kunal Khyade" required>
+              <span class="field-error" id="nameError"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="applicantAge"><i class="fa-solid fa-calendar"></i> Age (Years)</label>
+                <div class="input-with-hint">
+                  <input type="number" id="applicantAge" class="form-control" placeholder="Min 21" min="18" max="75" required>
+                  <span class="rule-hint">Criteria: &ge; 21 yrs</span>
+                </div>
+                <span class="field-error" id="ageError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="employmentType"><i class="fa-solid fa-briefcase"></i> Employment Type</label>
+                <select id="employmentType" class="form-control">
+                  <option value="Salaried">Salaried (Private / Govt)</option>
+                  <option value="Self-Employed">Self-Employed Professional</option>
+                  <option value="Business Owner">Business Owner</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="monthlySalary"><i class="fa-solid fa-indian-rupee-sign"></i> Net Monthly Salary (₹)</label>
+              <div class="input-with-hint">
+                <input type="number" id="monthlySalary" class="form-control" placeholder="e.g. 55000" min="0" step="1000" required>
+                <span class="rule-hint">Criteria: &gt; ₹30,000</span>
+              </div>
+              <span class="field-error" id="salaryError"></span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="creditScoreInput"><i class="fa-solid fa-gauge"></i> Credit Score (CIBIL / Experian)</label>
+                <div class="input-with-hint">
+                  <input type="number" id="creditScoreInput" class="form-control" placeholder="300 - 900" min="300" max="900" required>
+                  <span class="rule-hint">Criteria: &gt; 700</span>
+                </div>
+                <span class="field-error" id="scoreError"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="existingEmi"><i class="fa-solid fa-receipt"></i> Existing Monthly EMIs (₹)</label>
+                <div class="input-with-hint">
+                  <input type="number" id="existingEmi" class="form-control" placeholder="e.g. 12000" min="0" step="500" required>
+                  <span class="rule-hint">Criteria: &lt; ₹20,000</span>
+                </div>
+                <span class="field-error" id="emiError"></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="loanPurpose"><i class="fa-solid fa-tags"></i> Purpose of Loan</label>
+              <select id="loanPurpose" class="form-control">
+                <option value="Home Loan">Home Purchase / Construction</option>
+                <option value="Personal Loan">Personal / Emergency</option>
+                <option value="Auto / Vehicle Loan">Auto / Vehicle Purchase</option>
+                <option value="Education Loan">Higher Education</option>
+                <option value="Business Expansion">Business Working Capital</option>
+              </select>
+            </div>
+
+            <!-- Pre-Check Rules Indicator Badges -->
+            <div class="rules-checklist">
+              <div class="rule-check-item" id="chkSalary">
+                <i class="fa-regular fa-circle"></i> Salary &gt; ₹30,000
+              </div>
+              <div class="rule-check-item" id="chkScore">
+                <i class="fa-regular fa-circle"></i> Credit Score &gt; 700
+              </div>
+              <div class="rule-check-item" id="chkEmi">
+                <i class="fa-regular fa-circle"></i> Existing EMI &lt; ₹20,000
+              </div>
+              <div class="rule-check-item" id="chkAge">
+                <i class="fa-regular fa-circle"></i> Age &ge; 21 Years
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary-gradient btn-block" id="evaluateLoanBtn">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Run Eligibility Analysis
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Result Column -->
+        <div class="glass-card result-container" id="eligibilityResultWrapper">
+          <div class="empty-state-notice" id="eligibilityPlaceholder">
+            <div class="empty-icon-ring"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <h4>Ready to Evaluate</h4>
+            <p>Fill out the applicant details on the left and click "Run Eligibility Analysis" to generate real-time BFSI underwriting results.</p>
+          </div>
+
+          <!-- Dynamic Active Result Content -->
+          <div class="result-active-content hidden" id="eligibilityActiveResult">
+            <div class="result-banner-card" id="statusBanner">
+              <div class="status-indicator-badge" id="statusBadge">
+                <i class="fa-solid fa-circle-check"></i> <span id="statusText">APPROVED</span>
+              </div>
+              <h2 class="result-loan-amount" id="resultLoanAmount">₹0</h2>
+              <span class="result-loan-caption" id="resultLoanCaption">Maximum Approved Eligible Loan (20× Monthly Salary)</span>
+            </div>
+
+            <div class="result-metrics-grid">
+              <div class="result-sub-card">
+                <span class="sub-card-label">Risk Profile</span>
+                <span class="sub-card-value" id="riskClassification">Low Risk</span>
+              </div>
+              <div class="result-sub-card">
+                <span class="sub-card-label">Debt-To-Income (DTI)</span>
+                <span class="sub-card-value font-mono" id="dtiRatio">0.0%</span>
+              </div>
+              <div class="result-sub-card">
+                <span class="sub-card-label">Max Affordable EMI</span>
+                <span class="sub-card-value font-mono" id="maxAffordableEmi">₹0 / mo</span>
+              </div>
+              <div class="result-sub-card">
+                <span class="sub-card-label">Decision Model</span>
+                <span class="sub-card-value">Deterministic BFSI</span>
+              </div>
+            </div>
+
+            <!-- Validation Checklist Breakdown -->
+            <div class="rules-breakdown-card">
+              <h4><i class="fa-solid fa-list-check text-cyan"></i> Criteria Breakdown</h4>
+              <ul class="criteria-list" id="criteriaBreakdownList">
+                <!-- Dynamically injected -->
+              </ul>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="result-footer-actions">
+              <button class="btn-glass" id="transferToEmiBtn">
+                <i class="fa-solid fa-calculator"></i> Simulate in EMI Tool
+              </button>
+              <button class="btn-glass" id="askAiAboutProfileBtn">
+                <i class="fa-solid fa-brain"></i> AI Reasoning Report
+              </button>
+              <button class="btn-emerald-solid" id="saveEligibilityRecordBtn">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save & Sync
+              </button>
+            </div>
+            
+            <div class="save-status-msg" id="saveStatusMsg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: CREDIT SCORE ANALYZER -->
+    <section id="credit-section" class="tab-content">
+      <div class="section-header">
+        <div class="badge-pill"><i class="fa-solid fa-chart-simple"></i> Milestone 3.2</div>
+        <h2>Credit Score <span class="gradient-text">Risk Classification & Roadmap</span></h2>
+        <p>Examine creditworthiness, understand financial repayment behavior, and explore AI recommendations for rapid score improvement.</p>
+      </div>
+
+      <div class="two-column-grid">
+        <!-- Interactive Input & Gauge Card -->
+        <div class="glass-card">
+          <h3><i class="fa-solid fa-gauge text-cyan"></i> Financial Credibility Meter</h3>
+          <p class="card-caption">Adjust your credit score or input your exact CIBIL score to preview your risk bracket.</p>
+          
+          <div class="credit-gauge-visual-container">
+            <div class="circular-score-display" id="scoreDisplayCircle">
+              <span class="score-number-big font-mono" id="displayScoreVal">760</span>
+              <span class="score-bracket-label" id="displayScoreBracket">EXCELLENT</span>
+              <span class="score-range-caption">Scale: 300 to 900</span>
+            </div>
+          </div>
+
+          <div class="slider-control-group">
+            <div class="slider-header">
+              <label for="creditScoreRange">Select or Slide Score:</label>
+              <div class="score-input-pill">
+                <input type="number" id="creditScoreNumInput" value="760" min="300" max="900">
+                <span class="pts-unit">pts</span>
+              </div>
+            </div>
+            <input type="range" id="creditScoreRange" min="300" max="900" value="760" step="5" class="styled-range">
+            <div class="slider-ticks">
+              <span>300 (Poor)</span>
+              <span>650 (Good)</span>
+              <span>750 (Excellent)</span>
+              <span>900</span>
+            </div>
+          </div>
+
+          <!-- Quick Tier Selector Buttons -->
+          <div class="quick-tier-buttons">
+            <button type="button" class="btn-tier-chip poor" onclick="setCreditScore(580)">
+              <i class="fa-solid fa-triangle-exclamation"></i> Poor (580)
+            </button>
+            <button type="button" class="btn-tier-chip good" onclick="setCreditScore(710)">
+              <i class="fa-solid fa-circle-check"></i> Good (710)
+            </button>
+            <button type="button" class="btn-tier-chip excellent" onclick="setCreditScore(820)">
+              <i class="fa-solid fa-trophy"></i> Excellent (820)
+            </button>
+          </div>
+        </div>
+
+        <!-- Analysis & Recommendations Card -->
+        <div class="glass-card" id="creditAnalysisReport">
+          <div class="tier-badge-banner" id="tierBanner">
+            <div class="tier-icon" id="tierIcon"><i class="fa-solid fa-award"></i></div>
+            <div>
+              <h3 id="tierTitle">Tier Classification: Excellent</h3>
+              <p id="tierSummary">Exceptional credit health. You qualify for prime interest rates and instant approvals.</p>
+            </div>
+          </div>
+
+          <div class="score-stats-grid">
+            <div class="stat-box">
+              <span class="stat-box-title">Borrowing Risk</span>
+              <span class="stat-box-value text-emerald" id="riskRatingVal">Negligible</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-box-title">Interest Rate Tier</span>
+              <span class="stat-box-value text-cyan" id="rateTierVal">Prime Lowest</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-box-title">Approval Odds</span>
+              <span class="stat-box-value text-indigo" id="approvalOddsVal">&gt; 95%</span>
+            </div>
+          </div>
+
+          <div class="recommendations-block">
+            <h4><i class="fa-solid fa-lightbulb text-amber"></i> Financial Guidance & Next Steps</h4>
+            <ul class="recommendation-list" id="recommendationsList">
+              <!-- Dynamically populated -->
+            </ul>
+          </div>
+
+          <div class="advisor-quick-cta">
+            <button class="btn-primary-gradient btn-block" id="askAiCreditPlanBtn">
+              <i class="fa-solid fa-brain"></i> Ask Claude/Groq: How to optimize my score further?
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: REDUCING-BALANCE EMI CALCULATOR -->
+    <section id="emi-section" class="tab-content">
+      <div class="section-header">
+        <div class="badge-pill"><i class="fa-solid fa-calculator"></i> Milestone 3.3</div>
+        <h2>Reducing-Balance <span class="gradient-text">EMI Calculator</span></h2>
+        <p>Compute accurate monthly instalments using the standard reducing-balance actuarial formula: <span class="font-mono formula-badge">EMI = [P × R × (1+R)ⁿ] / [(1+R)ⁿ − 1]</span></p>
+      </div>
+
+      <div class="two-column-grid">
+        <!-- Interactive Controls Card -->
+        <div class="glass-card">
+          <h3><i class="fa-solid fa-sliders text-cyan"></i> Loan Parameters</h3>
+
+          <!-- Loan Amount Slider -->
+          <div class="slider-control-group">
+            <div class="slider-header">
+              <label for="loanAmountRange">Principal Loan Amount (P):</label>
+              <div class="score-input-pill wide">
+                <span class="currency-prefix">₹</span>
+                <input type="number" id="loanAmountInput" value="2500000" min="50000" max="20000000" step="25000">
+              </div>
+            </div>
+            <input type="range" id="loanAmountRange" min="50000" max="20000000" step="25000" value="2500000" class="styled-range">
+            <div class="slider-ticks">
+              <span>₹50K</span>
+              <span>₹50 Lakhs</span>
+              <span>₹1 Crore</span>
+              <span>₹2 Crore</span>
+            </div>
+          </div>
+
+          <!-- Interest Rate Slider -->
+          <div class="slider-control-group">
+            <div class="slider-header">
+              <label for="interestRateRange">Annual Interest Rate (p.a.):</label>
+              <div class="score-input-pill">
+                <input type="number" id="interestRateInput" value="8.5" min="4" max="24" step="0.1">
+                <span class="pts-unit">%</span>
+              </div>
+            </div>
+            <input type="range" id="interestRateRange" min="4" max="24" step="0.1" value="8.5" class="styled-range">
+            <div class="slider-ticks">
+              <span>4%</span>
+              <span>8.5%</span>
+              <span>15%</span>
+              <span>24%</span>
+            </div>
+          </div>
+
+          <!-- Loan Tenure Slider -->
+          <div class="slider-control-group">
+            <div class="slider-header">
+              <label for="loanTenureRange">Loan Tenure:</label>
+              <div class="tenure-input-wrapper">
+                <div class="score-input-pill">
+                  <input type="number" id="loanTenureInput" value="15" min="1" max="30">
+                  <span class="pts-unit" id="tenureUnitLabel">Yrs</span>
+                </div>
+                <div class="tenure-toggle-group">
+                  <button type="button" class="btn-toggle active" id="tenureYearBtn">Years</button>
+                  <button type="button" class="btn-toggle" id="tenureMonthBtn">Months</button>
+                </div>
+              </div>
+            </div>
+            <input type="range" id="loanTenureRange" min="1" max="30" step="1" value="15" class="styled-range">
+            <div class="slider-ticks">
+              <span id="tenureMinTick">1 Year</span>
+              <span id="tenureMidTick">15 Years</span>
+              <span id="tenureMaxTick">30 Years</span>
+            </div>
+          </div>
+
+          <!-- Quick presets -->
+          <div class="preset-pills-row">
+            <span class="preset-label">Quick Presets:</span>
+            <button class="btn-chip" onclick="setEmiPreset(500000, 10.5, 3)">Personal (₹5L, 3y)</button>
+            <button class="btn-chip" onclick="setEmiPreset(1200000, 9.0, 7)">Car (₹12L, 7y)</button>
+            <button class="btn-chip" onclick="setEmiPreset(5000000, 8.4, 20)">Home (₹50L, 20y)</button>
+          </div>
+        </div>
+
+        <!-- EMI Results & Chart Card -->
+        <div class="glass-card">
+          <div class="emi-highlight-box">
+            <span class="emi-label">Monthly Loan Repayment (EMI)</span>
+            <div class="emi-big-value font-mono" id="monthlyEmiValue">₹24,622</div>
+            <span class="emi-caption">Reducing-Balance Interest Calculation</span>
+          </div>
+
+          <div class="emi-breakdown-grid">
+            <div class="emi-breakdown-card">
+              <span class="breakdown-dot principal-dot"></span>
+              <span class="breakdown-title">Principal Amount</span>
+              <span class="breakdown-val font-mono" id="emiPrincipalDisplay">₹25,00,000</span>
+            </div>
+            <div class="emi-breakdown-card">
+              <span class="breakdown-dot interest-dot"></span>
+              <span class="breakdown-title">Total Interest</span>
+              <span class="breakdown-val font-mono text-cyan" id="emiInterestDisplay">₹19,31,960</span>
+            </div>
+            <div class="emi-breakdown-card">
+              <span class="breakdown-dot total-dot"></span>
+              <span class="breakdown-title">Total Amount Payable</span>
+              <span class="breakdown-val font-mono text-emerald" id="emiTotalDisplay">₹44,31,960</span>
+            </div>
+          </div>
+
+          <!-- Doughnut Chart Container -->
+          <div class="chart-container-box">
+            <canvas id="emiBreakdownChart" width="220" height="220"></canvas>
+          </div>
+
+          <div class="emi-actions-row">
+            <button class="btn-glass" id="toggleAmortizationBtn">
+              <i class="fa-solid fa-table-list"></i> Toggle Amortization Table
+            </button>
+            <button class="btn-primary-gradient" id="askAiEmiOptimizationBtn">
+              <i class="fa-solid fa-brain"></i> AI Prepayment Advice
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amortization Schedule Table (Collapsible) -->
+      <div class="glass-card mt-4 hidden" id="amortizationCard">
+        <div class="card-top-header">
+          <h3><i class="fa-solid fa-file-excel text-emerald"></i> Annual Amortization Schedule Preview</h3>
+          <button class="btn-outline-glass btn-sm" id="downloadAmortizationCsv">
+            <i class="fa-solid fa-download"></i> Export Schedule CSV
+          </button>
+        </div>
+        <div class="table-responsive">
+          <table class="modern-table" id="amortizationTable">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Opening Balance (₹)</th>
+                <th>EMI Paid (₹)</th>
+                <th>Principal Paid (₹)</th>
+                <th>Interest Paid (₹)</th>
+                <th>Closing Balance (₹)</th>
+              </tr>
+            </thead>
+            <tbody id="amortizationBody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: AI FINANCIAL ADVISOR -->
+    <section id="ai-section" class="tab-content">
+      <div class="section-header">
+        <div class="badge-pill"><i class="fa-solid fa-brain"></i> Milestone 4.2</div>
+        <h2>AI Financial Advisor &amp; <span class="gradient-text">Reasoning Engine</span></h2>
+        <p>Get personalized guidance, underwriting explanations, and financial planning tips powered by Claude &amp; Groq AI.</p>
+      </div>
+
+      <div class="two-column-grid">
+        <!-- AI Advisor Chat / Prompt Panel -->
+        <div class="glass-card advisor-chat-card">
+          <div class="advisor-header">
+            <div class="advisor-avatar">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="advisor-info">
+              <h4>Credix Financial Intelligence Bot</h4>
+              <span class="advisor-engine-name" id="advisorEngineLabel">Groq Llama 3.3 / Claude 3.5 Ready</span>
+            </div>
+            <button class="btn-icon-sm" id="clearChatBtn" title="Clear Chat History">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+          </div>
+
+          <!-- Chat Conversation Log -->
+          <div class="chat-messages-container" id="chatMessages">
+            <div class="chat-bubble ai-bubble">
+              <div class="bubble-icon"><i class="fa-solid fa-robot"></i></div>
+              <div class="bubble-content">
+                <p>Hello! I am your <strong>Credix AI Financial Advisor</strong>. I can analyze your loan eligibility profile, explain rejection reasons, suggest debt reduction strategies, and optimize your EMI repayment schedules.</p>
+                <p>Select any quick prompt below or type your custom financial question!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Suggestion Chips -->
+          <div class="prompt-chips-wrapper">
+            <button class="prompt-chip" data-prompt="How can I increase my maximum eligible loan amount?">
+              🚀 Increase Loan Limit
+            </button>
+            <button class="prompt-chip" data-prompt="What should I do if my credit score is below 700?">
+              📈 Fix Low Credit Score
+            </button>
+            <button class="prompt-chip" data-prompt="Explain how reducing existing EMIs improves loan approval odds.">
+              💡 DTI Ratio Tips
+            </button>
+            <button class="prompt-chip" data-prompt="Should I choose a longer tenure with lower EMI or shorter tenure with higher EMI?">
+              ⚖️ Tenure Comparison
+            </button>
+          </div>
+
+          <!-- Chat Input Area -->
+          <form id="aiChatForm" class="chat-input-bar">
+            <input type="text" id="aiUserInput" class="form-control chat-input" placeholder="Ask about loans, credit repair, or repayment strategies..." required>
+            <button type="submit" class="btn-primary-gradient send-btn" id="sendAiBtn">
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+
+        <!-- AI Insights & Tips Hub -->
+        <div class="glass-card">
+          <h3><i class="fa-solid fa-sparkles text-amber"></i> AI-Generated Financial Insights</h3>
+          <p class="card-caption">Smart actionable rules derived from standard BFSI risk underwriting practices:</p>
+
+          <div class="insight-cards-stack">
+            <div class="insight-item">
+              <div class="insight-num">01</div>
+              <div class="insight-text">
+                <h5>30% Credit Utilization Benchmark</h5>
+                <p>Keep your revolving credit card balances below 30% of total limit. This can boost your CIBIL score by up to 45 points within 90 days.</p>
+              </div>
+            </div>
+
+            <div class="insight-item">
+              <div class="insight-num">02</div>
+              <div class="insight-text">
+                <h5>The 40% FOIR (Fixed Obligation to Income Ratio)</h5>
+                <p>Banks ensure all existing + new loan EMIs do not exceed 40-50% of your net monthly take-home salary to prevent debt traps.</p>
+              </div>
+            </div>
+
+            <div class="insight-item">
+              <div class="insight-num">03</div>
+              <div class="insight-text">
+                <h5>Prepayment Magic on Reducing-Balance</h5>
+                <p>Paying just 1 additional EMI per calendar year can trim a 20-year home loan by nearly 3.5 years and save lakhs in compounded interest.</p>
+              </div>
+            </div>
+
+            <div class="insight-item">
+              <div class="insight-num">04</div>
+              <div class="insight-text">
+                <h5>Co-Applicant Leverage</h5>
+                <p>Adding an earning spouse or family member as co-borrower pools monthly income, directly multiplying your borrowing limit.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="engine-selector-box">
+            <label for="aiModelChoice"><i class="fa-solid fa-microchip"></i> Active AI Provider:</label>
+            <select id="aiModelChoice" class="form-control">
+              <option value="built-in">Deterministic Rule &amp; Finance Expert (Offline Instant)</option>
+              <option value="groq">Groq AI Cloud (Ultra-Fast LLaMA 3.3)</option>
+              <option value="claude">Anthropic Claude AI (Claude 3.5 Sonnet)</option>
+            </select>
+            <span class="engine-note">Configure your API Key in Settings (top right gear icon) to enable live LLM reasoning.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: RECORDS & GOOGLE SHEETS SYNC -->
+    <section id="records-section" class="tab-content">
+      <div class="section-header">
+        <div class="badge-pill"><i class="fa-solid fa-database"></i> Milestone 4.3</div>
+        <h2>Serverless Records &amp; <span class="gradient-text">Google Sheets Sync</span></h2>
+        <p>Persistent storage of loan applications using Google Apps Script Webhooks and local browser database.</p>
+      </div>
+
+      <div class="glass-card">
+        <div class="records-header-bar">
+          <div class="records-title-group">
+            <h3><i class="fa-solid fa-table-list text-cyan"></i> Submitted Application History</h3>
+            <span class="records-counter" id="recordCountBadge">0 Records Saved</span>
+          </div>
+          <div class="records-actions">
+            <button class="btn-outline-glass btn-sm" id="syncAllToSheetsBtn">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Sync to Google Sheets
+            </button>
+            <button class="btn-outline-glass btn-sm" id="exportRecordsCsvBtn">
+              <i class="fa-solid fa-file-csv"></i> Download CSV
+            </button>
+            <button class="btn-danger-glass btn-sm" id="clearAllRecordsBtn">
+              <i class="fa-solid fa-trash-can"></i> Clear History
+            </button>
+          </div>
+        </div>
+
+        <!-- Google Sheets Integration Banner -->
+        <div class="sheets-integration-notice">
+          <div class="sheets-icon"><i class="fa-solid fa-file-csv text-emerald"></i></div>
+          <div class="sheets-info">
+            <span class="sheets-status-title">Google Sheets Webhook Status:</span>
+            <span class="sheets-status-desc" id="sheetsWebhookStatus">No Webhook configured. Storing in browser local storage. Click "Configure Webhook" to link Google Sheets.</span>
+          </div>
+          <button class="btn-glass btn-sm" id="configureWebhookBtn">
+            <i class="fa-solid fa-link"></i> Configure Webhook
+          </button>
+        </div>
+
+        <!-- Records Table -->
+        <div class="table-responsive mt-3">
+          <table class="modern-table" id="recordsTable">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>Applicant</th>
+                <th>Age</th>
+                <th>Salary</th>
+                <th>Credit Score</th>
+                <th>Existing EMI</th>
+                <th>Status</th>
+                <th>Eligible Amount</th>
+                <th>Risk Profile</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody">
+              <!-- Dynamically populated or empty row -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- SETTINGS MODAL -->
+  <div class="modal-overlay hidden" id="settingsModal">
+    <div class="modal-card glass-card">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-gear text-cyan"></i> API &amp; Cloud Integration Settings</h3>
+        <button class="btn-close-modal" id="closeSettingsBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="settings-group">
+          <h4><i class="fa-solid fa-bolt text-indigo"></i> Groq API Key</h4>
+          <p class="settings-caption">Used for high-speed AI financial reasoning via LLaMA-3.3-70B on Groq cloud.</p>
+          <div class="input-with-button">
+            <input type="password" id="groqApiKeyInput" class="form-control" placeholder="gsk_...">
+            <button class="btn-glass" type="button" onclick="togglePasswordVisibility('groqApiKeyInput')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <span class="settings-link"><a href="https://console.groq.com/keys" target="_blank" rel="noopener">Get free Groq API Key &rarr;</a></span>
+        </div>
+
+        <div class="settings-group mt-3">
+          <h4><i class="fa-solid fa-brain text-rose"></i> Anthropic Claude API Key</h4>
+          <p class="settings-caption">Used for deep financial analysis &amp; personalized advisory with Claude 3.5 Sonnet.</p>
+          <div class="input-with-button">
+            <input type="password" id="claudeApiKeyInput" class="form-control" placeholder="sk-ant-...">
+            <button class="btn-glass" type="button" onclick="togglePasswordVisibility('claudeApiKeyInput')">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <span class="settings-link"><a href="https://console.anthropic.com/" target="_blank" rel="noopener">Get Anthropic Claude Key &rarr;</a></span>
+        </div>
+
+        <div class="settings-group mt-3">
+          <h4><i class="fa-solid fa-table text-emerald"></i> Google Apps Script Web App URL</h4>
+          <p class="settings-caption">Google Sheets endpoint created using Google Apps Script to auto-append records.</p>
+          <input type="url" id="googleSheetsWebhookInput" class="form-control" placeholder="https://script.google.com/macros/s/.../exec">
+          <span class="settings-link"><a href="#" id="viewScriptSnippetLink">View Google Apps Script Code Template &rarr;</a></span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-glass" id="cancelSettingsBtn">Cancel</button>
+        <button class="btn-primary-gradient" id="saveSettingsBtn">Save Configuration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOOGLE APPS SCRIPT CODE MODAL -->
+  <div class="modal-overlay hidden" id="appsScriptModal">
+    <div class="modal-card glass-card modal-lg">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-code text-emerald"></i> Google Apps Script Code</h3>
+        <button class="btn-close-modal" id="closeScriptModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <p class="settings-caption">
+          Open a new Google Sheet &rarr; Click <strong>Extensions &gt; Apps Script</strong> &rarr; Paste this code &rarr; Click <strong>Deploy &gt; New Deployment &gt; Web App</strong> (Execute as: Me, Who has access: Anyone) &rarr; Copy the Web App URL into Settings!
+        </p>
+        <pre class="code-block font-mono" id="scriptCodePre"><code>function doPost(e) {
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Timestamp", "Applicant Name", "Age", "Monthly Salary",
+        "Credit Score", "Existing EMI", "Status",
+        "Eligible Loan Amount", "Risk Rating", "DTI Ratio"
+      ]);
+      sheet.getRange(1, 1, 1, 10).setFontWeight("bold").setBackground("#e2e8f0");
+    }
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.timestamp || new Date().toISOString(),
+      data.applicantName || "N/A",
+      data.age || "N/A",
+      data.salary || 0,
+      data.creditScore || 0,
+      data.existingEmi || 0,
+      data.status || "N/A",
+      data.eligibleAmount || 0,
+      data.riskClassification || "N/A",
+      data.dtiRatio || "N/A"
+    ]);
+    return ContentService.createTextOutput(JSON.stringify({result: "success"}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    return ContentService.createTextOutput(JSON.stringify({result: "error", message: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</code></pre>
+        <button class="btn-glass btn-sm mt-2" id="copyScriptCodeBtn">
+          <i class="fa-solid fa-copy"></i> Copy Script to Clipboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script src="script.js"></script>
+</body>
+</html>
