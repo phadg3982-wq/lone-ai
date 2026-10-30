@@ -1,5 +1,9 @@
 # Credix AI | Intelligent BFSI Loan Eligibility & Financial Advisory Suite
 
+Demo : https://drive.google.com/file/d/1T4es7TTiXU0vJcyD-bEpAVMXbBAwfpqW/view
+
+Document : https://1drv.ms/w/c/554CFF5685301CFC/IQBFbOl7cDVJTqIuECr8JvZJAXwtHpS9ktkszUj6gK4hQQY?e=bUm5jJ
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Frontend](https://img.shields.io/badge/Frontend-HTML5%20%7C%20CSS3%20%7C%20Vanilla%20JS-success)](https://developer.mozilla.org/)
 [![Backend](https://img.shields.io/badge/Backend-Python%20Flask-blue)](https://flask.palletsprojects.com/)
